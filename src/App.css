@@ -1,39 +1,55 @@
-.App {
-  text-align: center;
+html {
+  font-size: 14px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+  background: rgb(218, 218, 218);
+  color: rgb(0, 0, 0);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-float infinite 3s ease-in-out;
-  }
+a {
+  text-decoration: none;
 }
 
-.App-header {
+hr {
+  margin: 0.5rem 0;
+}
+
+.page {
+  width: 90%;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  max-width: 1000px;
+  margin: 3rem auto;
+  padding: 0;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, .5);
+  background: #ffffff;
 }
 
-.App-link {
-  color: rgb(112, 76, 182);
+.menu-item {
+  position: relative;
+  flex-grow: 1;
+  text-align: center;
+  line-height: 3rem;
+  cursor: pointer;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #fff;
+  opacity: 0.8;
+  border-bottom-width: 0.1rem;
+  border-bottom-style: solid;
+  border-bottom-color: transparent; 
 }
 
-@keyframes App-logo-float {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(10px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
+:hover {
+  opacity: 1;
+  border-bottom-color: hsl(60, 50%, 50%);
+}
+
+.active,
+.active:hover {
+  opacity: 1;
+  border-bottom-color: hsl(120, 50%, 50%);
 }

@@ -5,7 +5,7 @@ interface IInitialState {
   movie?: IResponseById,
   movieList: IResponseById[],
   status: string,
-  error: null | string,
+  error: null | any,
 }
 
 // const createAppAsyncThunk = createAsyncThunk.withTypes<{
@@ -15,7 +15,7 @@ interface IInitialState {
 //   extra: { s: string; n: number }
 // }>()
 
-const initialMovie: IResponseById = require('./components/data.json');
+const initialMovie: IResponseById = require('../components/data.json');
 const initialMovieList: IResponseById[] = [];
 
 // const fetchMovieById = createAsyncThunk(
@@ -26,7 +26,7 @@ const initialMovieList: IResponseById[] = [];
 //   }
 // )
 
-const fetchMovieById = createAsyncThunk(
+export const fetchMovieById = createAsyncThunk(
   'movies/fetchMovieById',
   async (url: string) => {
     return await fetch(url)
@@ -63,10 +63,11 @@ export const movieSlice = createSlice({
       })
       .addCase(fetchMovieById.rejected, (state, action) => {
         state.status = 'rejected';
+        state.error = action.error;
         })
   }
 })
 
 // export const { addMovie, deleteMovie} = movieSlice.actions;
-export const MovieActions = { ...movieSlice.actions, fetchMovieById }
+export const {addMovie, deleteMovie} = movieSlice.actions;
 export default movieSlice.reducer;
