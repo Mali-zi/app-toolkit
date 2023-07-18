@@ -2,10 +2,11 @@ import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { IResponseById } from "../models";
 
 interface IInitialState {
-  movie?: IResponseById,
+  movie: IResponseById,
   movieList: IResponseById[],
   status: string,
   error: null | any,
+  toggleBtn: boolean,
 }
 
 // const createAppAsyncThunk = createAsyncThunk.withTypes<{
@@ -41,6 +42,7 @@ export const movieSlice = createSlice({
     movieList: initialMovieList,
     status: 'idle',
     error: null,
+    toggleBtn: true,
   } as IInitialState,
   reducers: {
     addMovie: (state, action: PayloadAction<IResponseById>) => {
@@ -48,6 +50,9 @@ export const movieSlice = createSlice({
     },
     deleteMovie: (state, action: PayloadAction<string>) => {
       state.movieList = state.movieList.filter(movie => movie.imdbID !== action.payload)
+    },
+    handleToggleBtn: (state) => {
+      state.toggleBtn = !state.toggleBtn
     }
   },
   extraReducers: (builder) => {
@@ -63,11 +68,10 @@ export const movieSlice = createSlice({
       })
       .addCase(fetchMovieById.rejected, (state, action) => {
         state.status = 'rejected';
-        state.error = action.error;
+        state.error = action.error.message;
         })
   }
 })
 
-// export const { addMovie, deleteMovie} = movieSlice.actions;
-export const {addMovie, deleteMovie} = movieSlice.actions;
+export const {addMovie, deleteMovie, handleToggleBtn} = movieSlice.actions;
 export default movieSlice.reducer;

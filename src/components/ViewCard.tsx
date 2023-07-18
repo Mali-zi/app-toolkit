@@ -1,29 +1,26 @@
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { ReactComponent as StarSvg } from './star.svg';
 import { IResponseById } from "../models";
-import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { addMovie, deleteMovie, handleToggleBtn } from "../store/movieSlice";
 
 export default function ViewCard() {
-  const initialMovie = require('../models/data.json');
-  const [movie, setMovie] = useState<IResponseById>(initialMovie);
-  const [movieList, setMovieList] = useState<IResponseById[]>([]);
-  const [toggle, setToggle] = useState(true);
+  const dispatch = useAppDispatch();
+  const movies = useAppSelector((state) => state.movies);
+  const {movie, movieList, status, error, toggleBtn} = movies;
 
-  function addMovie(movie: IResponseById) {
-    setMovieList([
-      ...movieList,
-      movie,
-    ])
-    setToggle(false);
+  function handleAddMovie(movie: IResponseById) {
+    dispatch(addMovie(movie));
+    dispatch(handleToggleBtn());
   };
 
-  function removeMovie(movieId: string) {
-    setMovieList(movieList.filter(item => movieId !== item.imdbID));
-    setToggle(true);
+  function handleDeleteMovie(movieId: string) {
+    dispatch(deleteMovie(movieId));
+    dispatch(handleToggleBtn());
   }
 
-  function handleClick(movie: IResponseById) {
-    toggle ? addMovie(movie) : removeMovie(movie.imdbID);
+  function handleClick() {
+    toggleBtn ? handleAddMovie(movie) : handleDeleteMovie(movie.imdbID);
   };
 
 
@@ -80,9 +77,9 @@ export default function ViewCard() {
           <Button 
             variant="primary" 
             className="px-3 mt-3 fs-6"
-            onClick={() => handleClick(movie)}
+            onClick={handleClick}
           >
-            {toggle ? <span>Add to Watchlist</span> : <span>&#10004; In Watchlist</span>}
+            {toggleBtn ? <span>Add to Watchlist</span> : <span>&#10004; In Watchlist</span>}
           </Button>
         </Card.Body>
       </Card>

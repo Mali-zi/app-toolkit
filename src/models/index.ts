@@ -33,15 +33,15 @@ export interface Rating {
 
 export interface IQueryByTitle {
   Title:      string;
-  Year:       string;
-  Plot:       string;
-  Response:   string;
+  Year?:       string;
+  Plot?:       string;
+  Response?:   string;
 }
 
 export interface IQueryById {
   Id:      string;
-  Plot:       string;
-  Response:   string;
+  Plot?:       string;
+  Response?:   string;
 }
 
 // export interface HandleResponseChangeProps {

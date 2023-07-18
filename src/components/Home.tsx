@@ -4,6 +4,7 @@ import { IQueryByTitle, IQueryById } from "../models";
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { fetchMovieById } from '../store/movieSlice'
 import ViewCard from "./ViewCard";
+import LoadingSpinner from "./LoadingSpinner";
 
 export default function Home() {
   const initialQueryByTitle = {
@@ -15,17 +16,15 @@ export default function Home() {
 
   const dispatch = useAppDispatch();
   const movies = useAppSelector((state) => state.movies);
-  const {movie, movieList, status, error} = movies;
+  const {movie, movieList, status, error, toggleBtn} = movies;
 
   const url = 'https://www.omdbapi.com?apikey=64405bd2&i=tt0103064';
 
   const [toggleQuery, setToggleQuery] = useState('');
-
   const [queryByTitle, setQueryByTitle] = useState<IQueryByTitle>(initialQueryByTitle);
 
   function searchByTitle() {
     setToggleQuery('queryByTitle');
-
   }
 
   function resetSearchByTitle() {
@@ -48,14 +47,22 @@ export default function Home() {
 
   const SearchResult = () => {
     if (toggleQuery) {
-      return (
-        <Container>
-        <h3>Результаты поиска {toggleQuery === 'queryById' ? 'по imdbID' : 'по названию'}:</h3>
-        <ViewCard />
-        </Container>
-      )
-    } else {
-      return <></>
+      if (status === 'rejected') {
+        return <h5>По вашему запросу ничего не найдено</h5>
+        } else {
+          if (status === 'pending') {
+            <LoadingSpinner />
+          } else {
+            return (
+              <Container>
+                <h3>Результаты поиска фильма {toggleQuery === 'queryById' ? 'по imdbID' : 'по названию'}:</h3>
+                <ViewCard />
+              </Container>
+            )
+          }
+        }
+      } else {
+        return <></>
     }
   };
 
@@ -266,7 +273,7 @@ export default function Home() {
       </Col>
     </Container>
 
-    <hr></hr>
+    <hr className="mt-5"></hr>
     <SearchResult />
   </Container>
   )
