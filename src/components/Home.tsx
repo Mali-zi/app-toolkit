@@ -7,6 +7,12 @@ import ViewCard from "./ViewCard";
 import LoadingSpinner from "./LoadingSpinner";
 
 export default function Home() {
+  const dispatch = useAppDispatch();
+  const movies = useAppSelector((state) => state.movies);
+  const {movie, movieList, status, error, toggleBtn} = movies;
+
+  const url = 'https://www.omdbapi.com?apikey=64405bd2&i=tt0103065';
+
   const initialQueryByTitle = {
     Title: '',
     Year: '',
@@ -14,14 +20,16 @@ export default function Home() {
     Response: '',
   };
 
-  const dispatch = useAppDispatch();
-  const movies = useAppSelector((state) => state.movies);
-  const {movie, movieList, status, error, toggleBtn} = movies;
-
-  const url = 'https://www.omdbapi.com?apikey=64405bd2&i=tt0103064';
+  const initialQueryById = {
+    Id: '',
+    Plot: '',
+    Response: '',
+  };
 
   const [toggleQuery, setToggleQuery] = useState('');
   const [queryByTitle, setQueryByTitle] = useState<IQueryByTitle>(initialQueryByTitle);
+  const [queryById, setQueryById] = useState<IQueryById>(initialQueryById);
+
 
   function searchByTitle() {
     setToggleQuery('queryByTitle');
@@ -32,39 +40,28 @@ export default function Home() {
     setToggleQuery('');
   };
   
-  const initialQueryById = {
-    Id: '',
-    Plot: '',
-    Response: '',
-  };
 
-  const [queryById, setQueryById] = useState<IQueryById>(initialQueryById);
   
   function resetSearchById() {
     setQueryById(initialQueryById);
     setToggleQuery('');
   };
 
-  const SearchResult = () => {
-    if (toggleQuery) {
-      if (status === 'rejected') {
-        return <h5>По вашему запросу ничего не найдено</h5>
-        } else {
-          if (status === 'pending') {
-            <LoadingSpinner />
-          } else {
-            return (
-              <Container>
-                <h3>Результаты поиска фильма {toggleQuery === 'queryById' ? 'по imdbID' : 'по названию'}:</h3>
-                <ViewCard />
-              </Container>
-            )
-          }
-        }
-      } else {
-        return <></>
-    }
+  const searchResultMovie = () => {
+    return (
+      <>
+        {toggleQuery === 'queryById' ? <h3>Результаты поиска фильма по imdbID:</h3> : 
+        toggleQuery === 'queryByTitle' ? <h3>Результаты поиска фильма по названию:</h3> :
+        <></>}
+      <ViewCard />
+      </>
+    )
   };
+
+  const searchResult = (status === 'pending' && toggleQuery) ? <LoadingSpinner /> :
+    (status === 'fulfilled' && toggleQuery) ? searchResultMovie() :
+    (status === 'rejected' && toggleQuery) ? <h5>По вашему запросу ничего не найдено</h5> :
+    <></>;
 
   return (
     <Container className="p-3">
@@ -184,7 +181,14 @@ export default function Home() {
       <Col xs={6}>
         <Row>
           <Form.Group className="mb-3" controlId="form-title">
-            <Form.Control type="text" value={queryById.Id} />
+            <Form.Control 
+              type="text" 
+              value={queryById.Id} 
+              onChange={(e) => setQueryById({
+                ...queryById,
+                Id: e.target.value,
+              })}  
+            />
             <Form.Label>Enter a valid IMDb ID</Form.Label>
           </Form.Group>
         </Row>
@@ -274,7 +278,7 @@ export default function Home() {
     </Container>
 
     <hr className="mt-5"></hr>
-    <SearchResult />
+    {searchResult}
   </Container>
   )
 }

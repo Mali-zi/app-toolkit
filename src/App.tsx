@@ -7,6 +7,7 @@ import { Route, Routes } from 'react-router-dom';
 import Home from './components/Home';
 // import Watchlist from './components/Watchlist';
 import ViewCard from './components/ViewCard';
+import Watchlist from './components/Watchlist';
 
 function App() {
 
@@ -19,7 +20,7 @@ function App() {
       <div className='bg-light shadow-1-strong'>
         <Routes>
           <Route path='/' element={<Home />} />
-          {/* <Route path='/watchlist' element={<Watchlist />} /> */}
+          <Route path='/watchlist' element={<Watchlist />} />
           {/* <Route path='/viewcard' element={<ViewCard />} /> */}
           {/* <Route path='*' element={<PageNotFound />} /> */}
         </Routes>
