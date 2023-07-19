@@ -1,32 +1,18 @@
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { ReactComponent as StarSvg } from './star.svg';
-import { IResponseById } from "../models";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { addMovie, deleteMovie, handleToggleBtn } from "../store/movieSlice";
+import { addMovie, deleteMovie } from "../store/movieSlice";
 
 export default function ViewCard() {
   const dispatch = useAppDispatch();
-  const movies = useAppSelector((state) => state.movies);
-  const {movie, movieList, status, error, toggleBtn} = movies;
-
-  function handleAddMovie(movie: IResponseById) {
-    dispatch(addMovie(movie));
-    dispatch(handleToggleBtn());
-  };
-
-  function handleDeleteMovie(movieId: string) {
-    dispatch(deleteMovie(movieId));
-    dispatch(handleToggleBtn());
-  }
+  const movie = useAppSelector((state) => state.movies.movie);
 
   function handleClick() {
-    toggleBtn ? handleAddMovie(movie) : handleDeleteMovie(movie.imdbID);
+    movie.inWatchlist ? dispatch(deleteMovie(movie)) : dispatch(addMovie(movie));
   };
-
 
   return (
     <Container className="mt-4">
-
       <Container>
         <Row className="flex-row fw-bold">
           <Col>
@@ -43,7 +29,6 @@ export default function ViewCard() {
           </Col>
         </Row>
       </Container>
-
       <Card
         bg={'light'}
         text={'dark'}
@@ -79,11 +64,10 @@ export default function ViewCard() {
             className="px-3 mt-3 fs-6"
             onClick={handleClick}
           >
-            {toggleBtn ? <span>Add to Watchlist</span> : <span>&#10004; In Watchlist</span>}
+            {!movie.inWatchlist ? <span>Add to Watchlist</span> : <span>&#10004; In Watchlist</span>}
           </Button>
         </Card.Body>
       </Card>
-
     </Container>
   )
 }

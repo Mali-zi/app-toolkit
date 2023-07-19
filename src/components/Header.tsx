@@ -20,7 +20,7 @@ export default function Header() {
           <Nav className="me-auto">
             <Nav.Link><NavLink className='menu-item' to='/'>Home</NavLink></Nav.Link>
             <Nav.Link><NavLink className='menu-item' to='/watchlist'>Watchlist</NavLink></Nav.Link>
-            <Nav.Link><NavLink className='menu-item' to='/viewcard'>ViewCard</NavLink></Nav.Link>
+            {/* <Nav.Link><NavLink className='menu-item' to='/viewcard'>ViewCard</NavLink></Nav.Link> */}
 
           </Nav>
         </Navbar.Collapse>

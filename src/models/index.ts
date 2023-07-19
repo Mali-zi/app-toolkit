@@ -1,47 +1,53 @@
 export interface IResponseById {
-  Title:      string;
-  Year:       string;
-  Rated:      string;
-  Released:   string;
-  Runtime:    string;
-  Genre:      string;
-  Director:   string;
-  Writer:     string;
-  Actors:     string;
-  Plot:       string;
-  Language:   string;
-  Country:    string;
-  Awards:     string;
-  Poster:     string;
-  Ratings:    Rating[];
-  Metascore:  string;
-  imdbRating: string;
-  imdbVotes:  string;
-  imdbID:     string;
-  Type:       string;
-  DVD:        string;
-  BoxOffice:  string;
-  Production: string;
-  Website:    string;
-  Response:   boolean;
+  Title?:      string;
+  Year?:       string;
+  Rated?:      string;
+  Released?:   string;
+  Runtime?:    string;
+  Genre?:      string;
+  Director?:   string;
+  Writer?:     string;
+  Actors?:     string;
+  Plot?:       string;
+  Language?:   string;
+  Country?:    string;
+  Awards?:     string;
+  Poster?:     string;
+  Ratings?:    Rating[];
+  Metascore?:  string;
+  imdbRating?: string;
+  imdbVotes?:  string;
+  imdbID?:     string;
+  Type?:       string;
+  DVD?:        string;
+  BoxOffice?:  string;
+  Production?: string;
+  Website?:    string;
+  Response:    string;
+  Error?:      string;
+  inWatchlist?: boolean,
 }
 
 export interface Rating {
-  Source: string;
-  Value:  string;
+  Source?: string;
+  Value?:  string;
+}
+export interface IInitialState {
+  movie: IResponseById,
+  movieList: IResponseById[],
+  status: string,
+  error: any,
+  toggleBtn: boolean,
 }
 
-export interface IQueryByTitle {
-  Title:      string;
-  Year?:       string;
-  Plot?:       string;
-  Response?:   string;
+export interface Props {
+  url: string, 
+  opts: string
 }
 
-export interface IQueryById {
-  Id:      string;
-  Plot?:       string;
-  Response?:   string;
+export interface SearchResultProps {
+  id: string, 
+  children: React.ReactNode
 }
 
 // export interface HandleResponseChangeProps {
