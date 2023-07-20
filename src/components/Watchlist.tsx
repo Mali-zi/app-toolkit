@@ -1,20 +1,20 @@
-import { Card, Col, Container, Row } from "react-bootstrap";
+import React from 'react';
+import { Card, Col, Container, ListGroup } from "react-bootstrap";
 import { useAppSelector } from "../app/hooks";
 import Star from "./Star";
 import { Link } from "react-router-dom";
 
 export default function Watchlist() {
-  
   const movieList = useAppSelector((state) => state.movies.movieList);
 
   return (
     <Container className="px-5">
       <h4 className="text-primary py-4">My watchlist</h4>
-      <div className="d-grid gap-3">
+      <ListGroup as='ul' className="d-grid gap-3">
         {movieList.map((item) => {
           return (
-            <Row>
-              <Link to={`/viewcard/${item.imdbID}`}>
+            <ListGroup.Item as="li" key={item.imdbID}>
+              <Link to={`/watchlist/${item.imdbID}`}>
                 <Card
                   bg={'Light'.toLowerCase()}
                   text={'dark'}
@@ -50,10 +50,10 @@ export default function Watchlist() {
                   </Card.Body>
                 </Card>
               </Link>
-            </Row>
+            </ListGroup.Item>
           )}
         )}
-      </div>
+      </ListGroup>
     </Container>
   )
 }

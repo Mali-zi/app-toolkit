@@ -1,11 +1,23 @@
+import React from 'react';
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { ReactComponent as StarSvg } from './star.svg';
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { addMovie, deleteMovie } from "../store/movieSlice";
+import { addMovie, deleteMovie, findMovie } from "../store/movieSlice";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function ViewCard() {
+  const { id } = useParams();
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if(id) {
+      dispatch(findMovie(id))
+    }
+  }, [])
+
   const movie = useAppSelector((state) => state.movies.movie);
+
 
   function handleClick() {
     movie.inWatchlist ? dispatch(deleteMovie(movie)) : dispatch(addMovie(movie));

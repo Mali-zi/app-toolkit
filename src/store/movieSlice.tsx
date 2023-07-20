@@ -7,6 +7,24 @@ const initialMovie: IResponseById = {
 };
 const initialMovieList: IResponseById[] = [];
 
+// export const fetchMovieById = createAsyncThunk(
+//   'auth/getExampleThunk',
+//   async (url: string, thunkApi) => {
+//     const { rejectWithValue, fulfillWithValue } = thunkApi;
+//           try{
+//           const response = await fetch(url);
+//           if (!response.ok) {
+//               return rejectWithValue(response.status)
+//           }
+//           const data = await response.json();
+//           return fulfillWithValue(data)
+//       }catch(error){
+//           throw rejectWithValue('Не удалось выполнить поиск. Попробуйте еще раз!')
+//       }
+//   }
+// );
+
+
 export const fetchMovieById = createAsyncThunk(
   'auth/getExampleThunk',
   async (url: string, thunkApi) => {
@@ -19,7 +37,7 @@ export const fetchMovieById = createAsyncThunk(
           const data = await response.json();
           return fulfillWithValue(data)
       }catch(error){
-          throw rejectWithValue('Не удалось выполнить поиск. Попробуйте еще раз!')
+          throw rejectWithValue('Oops! Something went wrong. Try again!')
       }
   }
 );
@@ -31,7 +49,6 @@ export const movieSlice = createSlice({
     movieList: initialMovieList,
     status: 'idle',
     error: null,
-    toggleBtn: true,
   } as IInitialState,
   reducers: {
     addMovie: (state, action: PayloadAction<IResponseById>) => {
@@ -47,12 +64,18 @@ export const movieSlice = createSlice({
         inWatchlist: false,
         };
     },
-    handleToggleBtn: (state) => {
-      state.toggleBtn = !state.toggleBtn
-    },
     resetSearch: (state) => {
       state.movie = initialMovie;
       state.status = 'idle';
+    },
+    findMovie: (state, action: PayloadAction<string>) => {
+      const foundMovie = state.movieList.find(item => (item.imdbID && item.imdbID === action.payload));
+      if (foundMovie) {
+        state.movie = {
+          ...foundMovie,
+          inWatchlist: true,
+        };
+      }
     }
   },
   extraReducers: (builder) => {
@@ -78,10 +101,10 @@ export const movieSlice = createSlice({
       })
       .addCase(fetchMovieById.rejected, (state, action) => {
         state.status = 'rejected';
-        state.error = action.error.message;
+        state.error = action.payload;
         })
   }
 })
 
-export const {addMovie, deleteMovie, resetSearch} = movieSlice.actions;
+export const {addMovie, deleteMovie, resetSearch, findMovie} = movieSlice.actions;
 export default movieSlice.reducer;

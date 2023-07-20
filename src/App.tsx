@@ -15,7 +15,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/watchlist' element={<Watchlist />} />
-          <Route path='/viewcard/:id' element={<ViewCard />} />
+          <Route path='/watchlist/:id' element={<ViewCard />} />
           <Route path='*' element={<PageNotFound />} />
         </Routes>
       </div>
