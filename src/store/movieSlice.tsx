@@ -7,24 +7,6 @@ const initialMovie: IResponseById = {
 };
 const initialMovieList: IResponseById[] = [];
 
-// export const fetchMovieById = createAsyncThunk(
-//   'auth/getExampleThunk',
-//   async (url: string, thunkApi) => {
-//     const { rejectWithValue, fulfillWithValue } = thunkApi;
-//           try{
-//           const response = await fetch(url);
-//           if (!response.ok) {
-//               return rejectWithValue(response.status)
-//           }
-//           const data = await response.json();
-//           return fulfillWithValue(data)
-//       }catch(error){
-//           throw rejectWithValue('Не удалось выполнить поиск. Попробуйте еще раз!')
-//       }
-//   }
-// );
-
-
 export const fetchMovieById = createAsyncThunk(
   'auth/getExampleThunk',
   async (url: string, thunkApi) => {

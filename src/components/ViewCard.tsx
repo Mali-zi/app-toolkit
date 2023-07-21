@@ -18,7 +18,6 @@ export default function ViewCard() {
 
   const movie = useAppSelector((state) => state.movies.movie);
 
-
   function handleClick() {
     movie.inWatchlist ? dispatch(deleteMovie(movie)) : dispatch(addMovie(movie));
   };

@@ -90,7 +90,7 @@ export default function Home() {
         </Col>
       </Container>
       <hr className="my-5"></hr>
-      {(status !== 'idle') ? <h4>Результаты поиска фильма по imdbID: {queryById}</h4> : <></>}
+      {(status !== 'idle') ? <h4>Результаты поиска фильма по IMDb ID: {queryById}</h4> : <></>}
       {searchResult}
     </Container>
   )
