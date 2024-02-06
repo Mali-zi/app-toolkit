@@ -9,7 +9,9 @@ const initialMovieList: IResponseById[] = [];
 
 export const fetchMovieById = createAsyncThunk(
   'auth/getExampleThunk',
-  async (url: string, thunkApi) => {
+  async ({par, query}: {par: string, query: string}, thunkApi) => {
+    const url = `https://www.omdbapi.com?apikey=64405bd2&${par}=${query}`;
+
     const { rejectWithValue, fulfillWithValue } = thunkApi;
           try{
           const response = await fetch(url);
