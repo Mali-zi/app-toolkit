@@ -14,6 +14,7 @@ export default function ViewCard() {
     if(id) {
       dispatch(findMovie(id))
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const movie = useAppSelector((state) => state.movies.movie);
