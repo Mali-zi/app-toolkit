@@ -122,7 +122,7 @@ export default function Home() {
             <Form.Group className='mb-3 ' controlId='form-title'>
               <Form.Control
                 type='text'
-                placeholder='terminator'
+                placeholder='The Fifth Element'
                 style={{ minWidth: 250 }}
                 autoFocus
                 required={true}
@@ -151,8 +151,7 @@ export default function Home() {
           </div>
         </div>
       </Container>
-      <hr className='my-5'></hr>
-      {status !== 'idle' ? <h1 className='text-bg-primary'>Search Result:</h1> : <></>}
+      {status !== 'idle' ? <h1 className='text-bg-primary text-center py-4 mb-5'>Search Result</h1> : <></>}
       {searchResult}
     </Container>
   );
