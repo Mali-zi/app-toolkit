@@ -42,6 +42,7 @@ export default function Home() {
           setFormErrors('You entered an invalid IMDb ID');
         } else {
           dispatch(fetchMovieById({ par, query }));
+          setFormErrors('');
         }
       }
     }
@@ -56,6 +57,7 @@ export default function Home() {
           setFormErrors('Movie title must be longer than 3 letters');
         } else {
           dispatch(fetchMovieById({ par, query }));
+          setFormErrors('');
         }
       }
     }
