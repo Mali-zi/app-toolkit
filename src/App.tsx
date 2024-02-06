@@ -11,7 +11,7 @@ function App() {
   return (
     <Container fluid="lg" className='page'>
       <Header />
-      <div className='bg-light shadow-1-strong'>
+      <div className='shadow-1-strong'>
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/watchlist' element={<Watchlist />} />

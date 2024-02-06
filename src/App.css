@@ -22,6 +22,7 @@ hr {
   width: 90%;
   min-height: 100vh;
   max-width: 1000px;
+  min-width: 320px;
   margin: 3rem auto;
   padding: 0;
   box-shadow: 0 0 1rem rgba(0, 0, 0, .5);
